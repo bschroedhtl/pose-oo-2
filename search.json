@@ -1,0 +1,395 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "POSE — Object-Oriented Programming in C#",
+    "section": "",
+    "text": "Introduction\nThis book collects the course material of POSE — Object-Oriented Programming in C# for class 2AHIF at HTL Leonding, school year 2026/27. It grows over the year, one part per unit. Each part holds the theory of its unit and the live demos from class.\nThe exercises are not part of the book: you get them through Classroom50.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#tools-you-need",
+    "href": "index.html#tools-you-need",
+    "title": "POSE — Object-Oriented Programming in C#",
+    "section": "Tools you need",
+    "text": "Tools you need\n\nThe .NET 10 SDK\nOne of these IDEs:\n\nJetBrains Rider\nVisual Studio\nVisual Studio Code with the C# Dev Kit extension\n\nPlantUML, to view the UML diagrams in the Readmes and exercises and to draw your own. In this book the diagrams are already drawn for you, but on GitHub and in your IDE a diagram is only text until PlantUML renders it:\n\nRider: open Settings → Languages & Frameworks → Markdown and enable PlantUML under Markdown Extensions. The Markdown preview then shows the diagrams.\nVisual Studio Code: install the PlantUML extension. The Markdown preview (Ctrl+Shift+V) then shows the diagrams. The extension draws them on your computer, which needs Java 11 or newer. Without Java, set plantuml.render to PlantUMLServer in the settings.\nVisual Studio: its Markdown preview can’t show PlantUML diagrams. Paste the diagram text into the PlantUML online server, which needs no installation, or open the file in VS Code.\n\nGit and a GitHub account",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/Readme.html",
+    "href": "content/02-OO-Introduction/Readme.html",
+    "title": "OO Basics",
+    "section": "",
+    "text": "NoteWhy object orientation?\n\n\n\nObject-oriented programming is the foundation most modern software is built on, because organizing code around objects that bundle data and behavior together is what makes large, evolving systems stay manageable.\n\n\nThis unit introduces classes and objects in C#, using a Pupil class as the running example. The theory is split into these chapters:\n\nFrom Structured to Object-Oriented: what objects are and why we use them\nClasses and Objects: defining a class, fields, and creating objects with new\nConstructors: bringing a new object into a working state\nProperties in Detail: auto, computed and fully written-out properties\nStatic vs. Instance: members shared by all objects of a class, and const vs. readonly vs. static\nEnumerations: named constant values with enum\nNaming Conventions: how to name classes, properties, fields and methods\nUML Class and Object Diagrams: the PlantUML notation used in the exercises, and snapshots of the objects at runtime\nGlossary: the most important terms of this unit",
+    "crumbs": [
+      "OO Basics"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/01-from-structured-to-oo.html",
+    "href": "content/02-OO-Introduction/01-from-structured-to-oo.html",
+    "title": "1  From Structured to Object-Oriented",
+    "section": "",
+    "text": "1.1 Goals of OO\nIn the first year you wrote structured (procedural) programs:\nThis works well for small programs. In larger ones, data and the methods working on it drift apart, and it gets hard to see who is allowed to change what.\nObject-oriented programming (OO) puts data and logic back together: an object holds its data and the methods that work on that data. Each object is responsible for one part of the overall task.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>From Structured to Object-Oriented</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/01-from-structured-to-oo.html#goals-of-oo",
+    "href": "content/02-OO-Introduction/01-from-structured-to-oo.html#goals-of-oo",
+    "title": "1  From Structured to Object-Oriented",
+    "section": "",
+    "text": "Reusability: an object is a self-contained building block that can be used in many places.\n\nSingle Responsibility Principle: a class should have exactly one responsibility.\n\nEncapsulation: how an object works is hidden inside. Other code only uses its public interface (a “contract”), so the inside can change without breaking the outside.\nTestability and extensibility: a defined interface is easy to test, and an object can later get new capabilities.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>From Structured to Object-Oriented</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/01-from-structured-to-oo.html#what-is-an-object",
+    "href": "content/02-OO-Introduction/01-from-structured-to-oo.html#what-is-an-object",
+    "title": "1  From Structured to Object-Oriented",
+    "section": "1.2 What Is an Object?",
+    "text": "1.2 What Is an Object?\nAn object has two sides that only make sense together:\n\nState: its data. A pupil has a first name, last name, date of birth and ZIP code.\nBehavior: its methods. A pupil can tell whether it is of full age, whether it is older than another pupil, or whether it lives nearby.\n\n\n\n\n\n\n\nImportantObject = state + behavior\n\n\n\nBehavior uses the state and may change it, and the state influences the result of the behavior. Only together do they make up an object.\n\n\nThe blueprint for objects is a class. It is similar to a record, but contains not only data, it also contains behavior.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>From Structured to Object-Oriented</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/01-from-structured-to-oo.html#finding-classes",
+    "href": "content/02-OO-Introduction/01-from-structured-to-oo.html#finding-classes",
+    "title": "1  From Structured to Object-Oriented",
+    "section": "1.3 Finding Classes",
+    "text": "1.3 Finding Classes\nTo design an object-oriented program, read the task description and look for the important nouns: they are candidates for classes. Then decide which data each class needs (state) and what it must be able to do (behavior).\nExample: for a school administration, Pupil is an obvious class:\n\n\n\nState (fields)\nBehavior (methods)\n\n\n\n\nFirstName, LastName\nIsOfFullAge\n\n\nDateOfBirth\nIsOlderThan\n\n\nZipCode, City\nLivesNearby\n\n\n\nThe next chapter turns this into C# code.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>From Structured to Object-Oriented</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/02-classes-and-objects.html",
+    "href": "content/02-OO-Introduction/02-classes-and-objects.html",
+    "title": "2  Classes and Objects",
+    "section": "",
+    "text": "2.1 Classes Are Blueprints for Objects\nA class describes what objects of a certain kind look like and what they can do. It is one level of structure above a method: where a method bundles a few statements into one task, a class bundles data and several methods into one unit.\nA class defines three things:\nAs a rule of thumb, data is private and is reached from the outside through properties, while the methods that form the object’s “interface” are public. Methods that only help other methods of the class do their work stay private.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Classes and Objects</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/02-classes-and-objects.html#classes-are-blueprints-for-objects",
+    "href": "content/02-OO-Introduction/02-classes-and-objects.html#classes-are-blueprints-for-objects",
+    "title": "2  Classes and Objects",
+    "section": "",
+    "text": "The state of its objects: which data every object carries. In C# these are fields and properties. The class only says that every pupil has a first name, not which name. The concrete values belong to the individual objects.\nThe behavior of its objects: what every object can do. These are the methods of the class.\nWhat is visible from the outside (public) and what stays hidden inside (private). This hiding is called encapsulation: other code may only use the public parts, so the class can change its inner workings without breaking anyone.\n\n\n\n2.1.1 Components of a Class\nA typical class is made of these parts (you will meet each of them in the following chapters):\n\nA unique name, such as Pupil. By convention it is a noun starting with an uppercase letter.\nprivate fields that store the object’s data.\npublic properties that give controlled access to that data. In special cases, e.g. a computed value that is only used inside the class, a property can also be private.\nA constructor that sets up a new object.\npublic methods: what other code can ask the object to do.\nprivate helper methods that split the work of the public methods into smaller steps.\n\n\n\n2.1.2 Defining the Pupil Class\nEach class usually lives in its own file with the same name. To create Pupil.cs, use Add New Item → Class in Visual Studio (or Add → Class/Interface in Rider):\npublic class Pupil\n{\n}\nThe class is still empty, but it is already a new data type: you could create Pupil objects now, they just wouldn’t hold any data yet.\n\n\n2.1.3 Properties in C#\nThe simplest way to give the class some data is an automatic property. Both IDEs have a shortcut for it: type prop and press TAB (twice in Visual Studio). The IDE inserts a template in which you only enter the data type and the name. Property names use PascalCase: every word starts with an uppercase letter, including the first one (FirstName, DateOfBirth).\npublic class Pupil\n{\n    public string FirstName { get; set; }\n}\n{ get; set; } means that the value can be read (get) and changed (set) from the outside. The chapter Properties in Detail explains what happens behind the scenes.\n\n\n2.1.4 Class Diagram\nA class with a few properties quickly becomes long in code. A class diagram shows the same structure at a glance, without any implementation details. Here is the class definition:\npublic class Pupil\n{\n    public string FirstName { get; set; }\n\n    public string LastName { get; set; }\n\n    public int ZipCode { get; set; }\n\n    public string City { get; set; }\n\n    public DateTime DateOfBirth { get; set; }\n}\nAnd here is the matching class diagram. The box has the class name at the top, followed by its data:\n\nThe exercises specify their classes with such diagrams. The chapter UML Class and Object Diagrams explains the notation, e.g. the symbols for public and private.\n\n\n2.1.5 Fields\nA field is a variable that belongs to an object instead of to a method. Fields store the object’s state. A pupil could store its data in these private fields:\npublic class Pupil\n{\n    private static int _nextId;\n    private readonly DateOnly _dateOfBirth;\n    private int? _zipCode;\n}\nLike a variable, each field has a data type and a name. There are a few important differences and rules, though:\n\nLifetime and scope: a local variable only exists while its method runs. A field lives as long as its object and can be used by all methods of the class. It cannot be used from outside the class, and each object has its own values: changing _zipCode of one pupil does not affect any other pupil.\nAlways private: other classes should not change an object’s data directly. They go through properties or methods, which can check the new values.\nNaming: fields start with an underscore and a lowercase letter, e.g. _dateOfBirth. So you can tell at a glance whether a name refers to a field or to a local variable. The chapter Naming Conventions sums up all naming rules.\nInitialization: fields should get their starting value in the constructor, so that a new object never contains random or missing data.\nreadonly: a readonly field can only be set in the constructor and never changes afterwards. A pupil’s date of birth is a good example.\nNullable types: int? means that the field may also hold null, i.e. “no value”. _zipCode is null as long as no ZIP code is known.\nstatic: a field marked static does not belong to one object, but is shared by all objects of the class. The chapter Static vs. Instance explains why _nextId needs this.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Classes and Objects</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/02-classes-and-objects.html#classes-are-templates",
+    "href": "content/02-OO-Introduction/02-classes-and-objects.html#classes-are-templates",
+    "title": "2  Classes and Objects",
+    "section": "2.2 Classes Are Templates",
+    "text": "2.2 Classes Are Templates\nThink of a class as a stamp. The Pupil stamp has the fields FirstName, LastName, DateOfBirth and ZipCode, and the methods IsOfAge, IsOlderThan and LivesNearby. With this one stamp you can create as many pupil objects as you like. Each has its own, independent values (one pupil named Max Muster with ZIP 4060, another named Erika Musterfrau with ZIP 1010), and each can run the same methods on its own data.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Classes and Objects</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/02-classes-and-objects.html#instantiation-creating-objects-based-on-classes",
+    "href": "content/02-OO-Introduction/02-classes-and-objects.html#instantiation-creating-objects-based-on-classes",
+    "title": "2  Classes and Objects",
+    "section": "2.3 Instantiation: Creating Objects Based on Classes",
+    "text": "2.3 Instantiation: Creating Objects Based on Classes\nCreating an object from a class is called instantiation, and the object is called an instance of the class. The Pupil class defines the structure (FirstName, LastName, DateOfBirth, ZipCode, …), and each instance fills it with its own values:\n\n\n\nFirstName\nLastName\nDateOfBirth\nZipCode\n\n\n\n\nAnna\nMüller\n2008-05-12\n4060\n\n\nPaul\nGruber\n2006-07-30\n(none)\n\n\n\nThe chapter UML Class and Object Diagrams shows how to draw such objects.\n\n2.3.1 Creating and Using Objects\nIn code, objects are created with the new operator:\nPupil pupil = new Pupil();\n\npupil.FirstName = \"Max\";\npupil.LastName = \"Muster\";\n\nConsole.WriteLine($\"{pupil.FirstName,-15} {pupil.LastName,-35}\");\nHere is what happens step by step:\n\nnew Pupil() reserves memory for a new object on the heap, the memory area for objects. A class is always a reference type.\nnew returns a reference to that object, a kind of address that says where it lives in memory. The variable pupil stores this reference, not the object itself.\nWith the dot operator (pupil.FirstName) you reach the properties and methods of exactly the object the variable refers to.\n\n\n\n\n\n\n\nWarningNo object, no access\n\n\n\nYou can only use an object after it has been created. If a variable of type Pupil does not refer to any object yet (its value is null), pupil.FirstName fails at runtime with a NullReferenceException.\n\n\nSince C# 9 you can omit the class name after new when the compiler already knows the type from the left side. This is called target-typed new:\nPupil pupil = new();\n\n\n2.3.2 The Relationship Between Object and Class\nClass and object are easy to mix up, so here is how they differ:\n\n\n\n\n\n\n\nClass\nObject\n\n\n\n\nExists exactly once in the program\nThere can be any number of them\n\n\nDescribes what objects look like (state, behavior)\nHolds concrete values and executes the operations\n\n\nIs fixed when you write the code\nIs created (and removed) while the program runs\n\n\nBlueprint for creating objects\nBuilt from that blueprint\n\n\n\nEach object is an instance of its class:\nClass  &lt;┄┄instance of┄┄  Object\n\n\n2.3.3 Methods\nSo far the pupil only holds data. Methods add behavior: they describe what an object can do. A method of a class can read the object’s data and can also change it, e.g. a method Move() of a horse could increase its position. In a class diagram, the methods are listed in a second section below the data:\n\nYou already know how to write methods from the first year. The only difference is that these methods don’t need the pupil’s data as parameters: they belong to the object and can use its fields and properties directly.\nCheck your understanding of this chapter with the Classes and Objects Self-Check Quiz.\n\n\n\n\n\n\nNoteClasses and Objects Self-Check Quiz\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Classes and Objects</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/03-constructors.html",
+    "href": "content/02-OO-Introduction/03-constructors.html",
+    "title": "3  Constructors",
+    "section": "",
+    "text": "3.1 Constructor ➔ Hooking into Instantiation\nIn the previous chapter, a pupil was created in two steps: first new Pupil(), then setting the properties one by one. That has a weakness: between these steps the object exists, but it is incomplete. Forget one assignment, and you have a pupil without a last name. A constructor solves this. It is special code that runs automatically while an object is being created, so the object is complete from its very first moment.\nSyntax\nA constructor looks like a method, with two differences:\nA class can have several constructors with different parameter lists (overloading, see below).\nIf you don’t write any constructor, C# creates a default constructor for you. It has no parameters and does nothing. That is why new Pupil() worked in the previous chapter.\nPurpose\nThe constructor’s job is to bring a new object into a working state, so that it can fulfill its purpose right away. To do this, it initializes the fields. It often takes parameters for the data an object cannot do without. A pupil without a name or a date of birth makes no sense, so the constructor demands them.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Constructors</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/03-constructors.html#constructor-hooking-into-instantiation",
+    "href": "content/02-OO-Introduction/03-constructors.html#constructor-hooking-into-instantiation",
+    "title": "3  Constructors",
+    "section": "",
+    "text": "It is named exactly like the class (Pupil).\nIt has no return type, not even void. It doesn’t return anything, because new already delivers the new object.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Constructors</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/03-constructors.html#instead-of-new-and-set-constructor",
+    "href": "content/02-OO-Introduction/03-constructors.html#instead-of-new-and-set-constructor",
+    "title": "3  Constructors",
+    "section": "3.2 Instead of new and Set… ➔ Constructor",
+    "text": "3.2 Instead of new and Set… ➔ Constructor\nThis constructor takes the pupil’s core data and stores it:\n/// &lt;summary&gt;\n/// Supply the pupil's core data directly at instantiation time\n/// &lt;/summary&gt;\n/// &lt;param name=\"firstName\"&gt;&lt;/param&gt;\n/// &lt;param name=\"lastName\"&gt;&lt;/param&gt;\n/// &lt;param name=\"dateOfBirth\"&gt;&lt;/param&gt;\npublic Pupil(string firstName, string lastName, DateOnly dateOfBirth)\n{\n    FirstName = firstName;\n    LastName = lastName;\n    _dateOfBirth = dateOfBirth;\n}\nNow it’s impossible to create a pupil without these three values: the compiler reports an error if an argument is missing. Note the naming: the parameters start with a lowercase letter (firstName), the properties with an uppercase letter (FirstName), and the field with an underscore (_dateOfBirth). So it’s always clear which is which.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Constructors</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/03-constructors.html#overloading-constructors",
+    "href": "content/02-OO-Introduction/03-constructors.html#overloading-constructors",
+    "title": "3  Constructors",
+    "section": "3.3 Overloading Constructors",
+    "text": "3.3 Overloading Constructors\nSometimes more data is known when an object is created. A second constructor with a longer parameter list can accept it. Having several constructors with the same name but different parameters is called overloading, just like with methods:\n/// &lt;summary&gt;\n/// The \"full\" constructor - every pupil needs a name and a date of birth\n/// &lt;/summary&gt;\npublic Pupil(string firstName, string lastName, DateOnly dateOfBirth)\n{\n    FirstName = firstName;\n    LastName = lastName;\n    _dateOfBirth = dateOfBirth;\n}\n\n/// &lt;summary&gt;\n/// Convenience overload for when the ZIP code is already known too\n/// Avoids code duplication ==&gt; calls the constructor above\n/// &lt;/summary&gt;\npublic Pupil(string firstName, string lastName, DateOnly dateOfBirth, int zipCode) : this(firstName, lastName, dateOfBirth)\n{\n    ZipCode = zipCode;\n}\nThe second constructor doesn’t repeat the three assignments. With : this(firstName, lastName, dateOfBirth) it first calls the other constructor, which sets name and date of birth. Then its own body adds the ZIP code. This way the shared setup code exists only once. (This overload isn’t part of the 01-Pupils requirements. It’s only here to show the pattern.)\nThe compiler picks the constructor whose parameters match the arguments. Target-typed new works here too, as long as the type is clear from the left side:\n// Pupil pupil = new(); // won't compile any more, now that we defined our own constructors!\nPupil pupil = new(\"Max\", \"Muster\", new(2002, 02, 02));\nPupil pupil2 = new(\"Jane\", \"Doe\", new(2003, 03, 03), 4060);\n\n\n\n\n\n\nTipCheck yourself\n\n\n\nThink about these questions before you read on:\n\nWhy can’t we use the default constructor any longer?\nWhy don’t we have to write new Pupil(new DateOnly(...))?\nWhat is the value of pupil.ZipCode, since that object was created without a ZIP code?\npupil and pupil2 are both instances of the same class. Are they equal (==)? Would they be equal if they had the same values?\n\n\n\n\n\n\n\n\n\nImportantNo more default constructor\n\n\n\nAs soon as you write any constructor yourself, C# no longer creates the parameterless default constructor. That’s intended: if a pupil needs a name, new Pupil() should not work. If you do need a parameterless constructor as well, write one yourself with an empty parameter list.\n\n\nThe meaning of this: inside a class, this is a reference to the current instance, i.e. the object whose method or constructor is running right now. this._zipCode means “the _zipCode of this pupil”. Because it refers to one particular object, this is the opposite of static (see Static vs. Instance). The : this(...) call in a constructor’s signature is a special use of the keyword. It will make more sense once we cover base (inheritance), so be patient for now.\nDefault values: every field has a value, even if the constructor doesn’t set it. C# then fills in a default value. Value types get their type’s default: int becomes 0, double becomes 0D, bool becomes false, long becomes 0L, DateTime becomes DateTime.MinValue, and so on. Reference types default to null. If the type is not declared as nullable (string instead of string?), the compiler warns you, and with TreatWarningsAsErrors that is a build error. Relying on default values is bad style: initialize every field explicitly in the constructor, so that it’s obvious which value an object starts with.\nCheck your understanding of this chapter with the Constructors Self-Check Quiz.\n\n\n\n\n\n\nNoteConstructors Self-Check Quiz\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Constructors</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html",
+    "href": "content/02-OO-Introduction/04-properties.html",
+    "title": "4  Properties in Detail",
+    "section": "",
+    "text": "4.1 Automatic Properties\nFrom the outside, a property looks like a variable of the object: you read and assign it with the dot operator. On the inside, however, it consists of two small pieces of code, the accessors. get runs when the value is read, and set runs when a value is assigned. The set accessor receives the new value in a hidden parameter called value.\nC# offers several ways to write a property, from a one-liner to a full block of code. This chapter shows them one after the other, and each time explains which problem the longer form solves. At the end, a table sums up which form to use when.\nMost properties just store a value and hand it back. For them, the shortest form is enough, the automatic property (auto property). You only write the data type, the name, and which accessors exist:\nUsing the property looks like using a variable:\nThe value has to be stored somewhere. For an auto property, the compiler secretly creates a private field for it, the backing field, and fills in the accessor code. So the one-liner above behaves like this longer code:\nThis is why a property is often called a public wrapper around a field: the field stores the value, and the property controls how it is read and written. Not every field needs a property, though. Data that is only used inside the class stays a plain private field.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html#automatic-properties",
+    "href": "content/02-OO-Introduction/04-properties.html#automatic-properties",
+    "title": "4  Properties in Detail",
+    "section": "",
+    "text": "public string FirstName { get; set; }\n\nPupil pupil = new Pupil();\npupil.FirstName = \"Max\";\n\nprivate string _firstName; // created by the compiler, invisible to you\n\npublic string FirstName\n{\n    get { return _firstName; }\n    set { _firstName = value; }\n}\n\n\n4.1.1 Restricting Access\nOften other classes may read a value but not change it. A pupil’s first name, for example, is set in the constructor and should not be overwritten from anywhere else in the program. To achieve this, make only the set accessor private:\npublic string FirstName { get; private set; }\nNow every class can read pupil.FirstName, but only code inside Pupil can assign it. An access modifier on an accessor can only restrict access further, never widen it.\nIf a value never changes at all once the object exists, leave out set completely. Such a get-only property can only be assigned in the constructor:\npublic DateOnly DateOfBirth { get; }",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html#when-an-auto-property-is-not-enough",
+    "href": "content/02-OO-Introduction/04-properties.html#when-an-auto-property-is-not-enough",
+    "title": "4  Properties in Detail",
+    "section": "4.2 When an Auto Property Is Not Enough",
+    "text": "4.2 When an Auto Property Is Not Enough\nAn auto property stores every value it gets, without looking at it. As soon as the property has to do something when a value is assigned, the set accessor needs a body of its own. There are three typical reasons:\n\nValidation: reject values that make no sense. Pupil.ZipCode must stay between 1000 and 9999.\nTransformation: store the value in a cleaned-up form. A name typed as \"  Max \" should be stored as \"Max\".\nReacting to a change: do something extra whenever the value changes, e.g. write a message to a log.\n\nSince C# 14 (.NET 10), the keyword field makes this easy. Inside an accessor, field stands for the hidden backing field that the compiler creates. So you write a body only for the accessor that needs special code, and the other one stays automatic (get;).\nValidation: ZipCode accepts only four-digit ZIP codes.\npublic int? ZipCode\n{\n    get;\n    set\n    {\n        if (value is &gt;= 1000 and &lt;= 9999)\n        {\n            field = value;\n        }\n    }\n}\npupil.ZipCode = 4060; runs the set accessor with value = 4060, which passes the check, so field = value; stores it. pupil.ZipCode = 42; runs the set accessor too, but the check fails, so the old value stays.\nTransformation: FirstName removes the spaces around a name before storing it. With a single expression, the short =&gt; form works (see Expression Syntax), and the setter can still be private:\npublic string FirstName\n{\n    get;\n    private set =&gt; field = value.Trim();\n}\nReacting to a change: LastName writes a message every time it changes, e.g. after a marriage:\npublic string LastName\n{\n    get;\n    set\n    {\n        Console.WriteLine($\"Changing last name from {field} to {value}\");\n        field = value;\n    }\n}\nNote that the setter also runs when the constructor assigns LastName = lastName;. The first message is therefore “Changing last name from to Muster”, with an empty old value.\nWith field, you can start every property as a simple auto property { get; set; }. If you later notice that some values must be rejected or cleaned up, you give the set accessor a body. You don’t need to add a field or rewrite get, and the code that uses the property doesn’t change at all.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html#explicit-backing-fields",
+    "href": "content/02-OO-Introduction/04-properties.html#explicit-backing-fields",
+    "title": "4  Properties in Detail",
+    "section": "4.3 Explicit Backing Fields",
+    "text": "4.3 Explicit Backing Fields\nBefore C# 14, the field keyword didn’t exist. To give an accessor a body, you had to declare the backing field yourself and write both accessors. This is called a fully written-out property. You will see it in almost all existing C# code, so you need to be able to read it:\nprivate int? _zipCode;\n\npublic int? ZipCode\n{\n    get\n    {\n        return this._zipCode;\n    }\n    set\n    {\n        if (value is &gt;= 1000 and &lt;= 9999)\n        {\n            this._zipCode = value;\n        }\n    }\n}\nIt does exactly the same as the ZipCode with field above. A fully written-out property consists of these parts:\n\nA private backing field that holds the value. By convention its name starts with an underscore and a lowercase letter (_zipCode).\nThe property itself, named like the field but starting with an uppercase letter (ZipCode). It usually has the same data type as the field.\nThe get accessor, which returns the field’s value.\nThe set accessor, which receives the new value in value and writes it to the field, often after a check.\n\n\n\n\n\n\n\nNoteTwo correct ways\n\n\n\nA property with an explicit backing field and a property with field do the same thing. When a class diagram lists the backing field (e.g. -int? _zipCode), write it out as shown in the diagram. Otherwise field is usually the shorter and safer choice: the compiler’s hidden field has no name, so no other code in the class can write to it and bypass the check.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html#expression-syntax",
+    "href": "content/02-OO-Introduction/04-properties.html#expression-syntax",
+    "title": "4  Properties in Detail",
+    "section": "4.4 Expression Syntax",
+    "text": "4.4 Expression Syntax\nIf an accessor does nothing but a single expression, you can shorten it with =&gt; (expression syntax). You have already seen it in the FirstName setter above. It works for explicit backing fields as well:\nprivate string _firstName;\npublic string FirstName\n{\n    get =&gt; this._firstName;\n    set =&gt; this._firstName = value;\n}\nExpression syntax is only a shorter way of writing an accessor: get =&gt; this._firstName; means exactly the same as get { return this._firstName; }. As soon as an accessor needs more than one expression, like the if in ZipCode, you need the long form with braces.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html#computed-properties",
+    "href": "content/02-OO-Introduction/04-properties.html#computed-properties",
+    "title": "4  Properties in Detail",
+    "section": "4.5 Computed Properties",
+    "text": "4.5 Computed Properties\nSome values don’t need to be stored at all, because they follow from other data. A computed property has only a get accessor and no backing field. Its value is calculated again every time someone reads it. That’s why it cannot have a set accessor: there is nowhere to store a value.\nA pupil’s full name is a good example. It follows from first and last name, so storing it separately would only risk that the three values contradict each other. Expression syntax makes this a one-liner:\npublic string FullName =&gt; $\"{FirstName} {LastName}\";\n\n\n\n\n\n\nImportantThree different concepts\n\n\n\nDon’t confuse these forms. An auto property ({ get; set; }) stores a value in a hidden field. Expression syntax (=&gt;) is just a shorter way to write an accessor. A computed property stores nothing and computes its value on every read, and it can be written in either the long or the short form. public string FullName =&gt; ...; (computed, no set) is something completely different from public string FullName { get; set; } (stored).\n\n\nA pupil’s age is computed too, because it changes over time, even if nothing in the object changes. It depends on the date of birth and today’s date:\n/// &lt;summary&gt;\n/// How many whole years lie between the date of birth and today\n/// &lt;/summary&gt;\npublic int Age\n{\n    get\n    {\n        int years = DateTime.Now.Year - DateOfBirth.Year;\n        DateTime fullYearsDate = DateOfBirth.AddYears(years);\n        if (fullYearsDate &gt; DateTime.Now)\n        {\n            // This year's birthday hasn't happened yet\n            years--;\n        }\n        return years;\n    }\n}\n\n4.5.1 Complexity of Computed Properties\nWhoever uses a property expects it to behave like a variable: reading it should be fast and should not change anything. A computed property must live up to that expectation. So keep it simple:\n\nFast: no expensive work, such as big loops or creating many objects. Someone might read the property a thousand times in a loop without suspecting that each read is expensive.\nShort: a few lines at most, ideally just one.\nNo complex business logic, and no side effects. Reading a value must not change the object.\nMethods called from the property count too: a one-line property that calls an expensive method is still expensive.\n\nIf you need more logic than that, write a method instead. A method call tells the reader “work is being done here”, and its result can be stored in a variable if it’s needed more than once.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html#handling-invalid-values",
+    "href": "content/02-OO-Introduction/04-properties.html#handling-invalid-values",
+    "title": "4  Properties in Detail",
+    "section": "4.6 Handling Invalid Values",
+    "text": "4.6 Handling Invalid Values\nWhat should a setter do when value fails the check? There are three options, each with an advantage and a drawback:\n\nDon’t set it at all: the object never gets an incorrect value, but the caller doesn’t learn that something went wrong.\nThrow an exception: the object never gets an incorrect value and the caller is notified, but the program stops unless the caller handles the exception. You will learn about exceptions later in the year.\nSet a meaningful default value instead: the object never gets an incorrect value and the program keeps working, but the caller gets no feedback about the invalid value.\n\nWhich option fits best is up to the author of the class and depends on the specific value and on what the program is for. Pupil.ZipCode uses option 1: an invalid ZIP code is simply ignored, as the exercise requires.\n\n\n\n\n\n\nTipUse the properties inside the class, too\n\n\n\nThe class itself should use its properties as well, instead of accessing a backing field directly, even if that means working with a private setter. Otherwise a constructor could write _zipCode = 42; and bypass the check in the setter. When all code goes through the property, the checks always run and are written in one place only. With field this happens automatically, because there is no named backing field to write to.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/04-properties.html#which-property-syntax-when",
+    "href": "content/02-OO-Introduction/04-properties.html#which-property-syntax-when",
+    "title": "4  Properties in Detail",
+    "section": "4.7 Which Property Syntax When?",
+    "text": "4.7 Which Property Syntax When?\n\n\n\n\n\n\n\n\nYou need …\nUse\nExample\n\n\n\n\na value that can be read and changed from anywhere\nauto property\npublic string City { get; set; }\n\n\na value others may read, but only the class may change\nauto property with private set\npublic string FirstName { get; private set; }\n\n\na value that never changes after the constructor\nget-only auto property\npublic DateOnly DateOfBirth { get; }\n\n\nto check, clean up or react to a new value\nset with a body, using field\nZipCode, FirstName, LastName above\n\n\nthe same, when the backing field must be visible (e.g. listed in a class diagram)\nexplicit backing field\nprivate int? _zipCode; + ZipCode\n\n\na value that follows from other data\ncomputed property\npublic string FullName =&gt; ...;\n\n\nexpensive or complex logic\na method, not a property\npublic bool IsOlderThan(Pupil other)\n\n\n\nCheck your understanding of this chapter with the Properties Self-Check Quiz.\n\n\n\n\n\n\nNoteProperties Self-Check Quiz\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Properties in Detail</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/05-static-vs-instance.html",
+    "href": "content/02-OO-Introduction/05-static-vs-instance.html",
+    "title": "5  Static vs. Instance",
+    "section": "",
+    "text": "5.1 Fields\nSo far, everything in a class belonged to the individual objects: every pupil has its own first name, its own date of birth, its own ZIP code. Members like these are called instance members, and they remain the normal case.\nSometimes, however, a value belongs to the class as a whole rather than to one object. The 01-Pupils exercise has such a case: every pupil gets a unique, ever-increasing Id. To hand out the next id, somebody has to remember which id comes next. That counter can’t be stored in each pupil, because every pupil would have its own copy and they would all start at the same number. It must exist once for the whole class. Members like that are marked with the keyword static.\nA static field exists exactly once, no matter how many objects there are, and all instances share it. When one pupil changes it, all other pupils see the new value:\nEvery time a new Pupil is created, the constructor copies the shared _nextId into the pupil’s own Id, then increases the counter for the next pupil. The first pupil gets id 1, the second id 2, and so on. That’s why _nextId must be static, while Id is a normal instance property: every pupil has its own id, but they all share one counter.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Static vs. Instance</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/05-static-vs-instance.html#fields",
+    "href": "content/02-OO-Introduction/05-static-vs-instance.html#fields",
+    "title": "5  Static vs. Instance",
+    "section": "",
+    "text": "public class Pupil\n{\n    private static int _nextId = 1;\n\n    public int Id { get; }\n\n    public Pupil(string firstName, string lastName, DateOnly dateOfBirth)\n    {\n        Id = _nextId;\n        _nextId++;\n        // ... remaining initialization\n    }\n}\n\n\n\n\n\n\n\nWarningSide effects\n\n\n\nUse static fields very carefully. A change made through one object silently affects all the others. This is called a side effect, and it’s a common source of bugs that are hard to find. It can also make tests depend on each other, because the shared value survives from one test to the next.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Static vs. Instance</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/05-static-vs-instance.html#methods",
+    "href": "content/02-OO-Introduction/05-static-vs-instance.html#methods",
+    "title": "5  Static vs. Instance",
+    "section": "5.2 Methods",
+    "text": "5.2 Methods\nMethods can be static, too. A static method belongs to the class, not to an object, so it runs without any instance. That’s why you call it via the class name: Console.WriteLine(...) and Math.Max(...) are static methods, and so were all the methods you wrote in the first year.\nThis has a few consequences:\n\nA static method cannot use instance fields or properties, and cannot use this: there is no “current object” whose data it could access. It can use static fields.\nIts only way to work with objects is to receive them as parameters.\nApart from that it’s a normal method: it can be overloaded, and access modifiers like public and private apply as usual.\n\nAlthough static methods belong to the class, good static methods are the opposite of side-effect-prone code. They work only with their parameters and return a result, without keeping any data between calls. We call such methods stateless. They are easy to understand and easy to test, which is why they were all you needed in the first year. If a method doesn’t use any instance data, the IDE often suggests making it static.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Static vs. Instance</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/05-static-vs-instance.html#static-class",
+    "href": "content/02-OO-Introduction/05-static-vs-instance.html#static-class",
+    "title": "5  Static vs. Instance",
+    "section": "5.3 Static Class",
+    "text": "5.3 Static Class\nIf a class contains only static members, you can declare the class itself as static class. This is typical for a collection of helper methods that don’t need any state. The best-known example is System.Math: Math.Sqrt, Math.Round and Math.Max are all static, and a “math object” would make no sense.\n\n\n\n\n\n\nNote\n\n\n\nYou cannot create an instance of a static class. new Math() does not compile.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Static vs. Instance</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/05-static-vs-instance.html#const-readonly-and-static-compared",
+    "href": "content/02-OO-Introduction/05-static-vs-instance.html#const-readonly-and-static-compared",
+    "title": "5  Static vs. Instance",
+    "section": "5.4 const, readonly and static Compared",
+    "text": "5.4 const, readonly and static Compared\nThree keywords change how a field behaves, and they are easy to mix up: const, readonly and static. They answer two different questions:\n\nHow many copies exist? One per object (instance field), or one for the whole class (static, and every const).\nWhen can the value change? Never, because it is fixed in the code (const); once, in the constructor (readonly); or any time (neither).\n\nThis HorseRace class uses all of them:\npublic class HorseRace\n{\n    public const int MaxSteps = 20;\n    public static readonly DateTime StartTime = DateTime.Now;\n    private static int _raceCount;\n    private readonly Horse[] _horses;\n\n    public HorseRace(Horse[] horses)\n    {\n        _horses = horses;\n        _raceCount++;\n    }\n}\nconst: a constant, fixed when you write the code. MaxSteps is 20 in every race and in every run of the program. The compiler writes the value directly into every place where MaxSteps is used, so it must be known at compile time: a number, a bool, a char or a string literal. DateTime.Now or new Horse[5] are not possible. A constant belongs to the class, not to an object, so you use it via the class name: HorseRace.MaxSteps. It is automatically static, and writing static const is even a compile error.\nreadonly: set once, then fixed. _horses gets its value in the constructor, and after that nobody can assign a different array to it, not even the class itself (_horses = ...; in a method is a compile error). Unlike a constant, the value is only known at runtime: each race gets the horses that are passed to its constructor. So every object has its own readonly value.\nstatic: one copy for the whole class. _raceCount exists once and counts all races ever created. Without readonly, it can change at any time, with the side effects described above.\nstatic readonly: one copy, set once at runtime. StartTime exists once for the whole class and never changes, but its value is only known when the program runs, so it can’t be a const. Use static readonly for constants that the compiler can’t compute: a DateTime, an array, an object.\n\n\n\n\n\n\n\n\n\n\nKeyword\nCopies\nValue is set …\nCan change later?\nExample\n\n\n\n\n(none)\none per object\nanywhere in the class\nyes\nprivate int _position;\n\n\nreadonly\none per object\nat the declaration or in the constructor\nno\nprivate readonly Horse[] _horses;\n\n\nstatic\none for the class\nanywhere in the class\nyes\nprivate static int _raceCount;\n\n\nstatic readonly\none for the class\nat the declaration\nno\npublic static readonly DateTime StartTime\n\n\nconst\none for the class\nin the code, at compile time\nno\npublic const int MaxSteps = 20;\n\n\n\nTo choose, ask the two questions from above:\n\nIs the value the same for every object and known when you write the code? Use const.\nIs it the same for every object, but only known at runtime? Use static readonly.\nDoes each object get its own value that never changes after the constructor? Use readonly.\nDoes the value change while the program runs? Leave readonly out, and add static only if all objects must share it.\n\n\n\n\n\n\n\nWarningreadonly protects the reference, not the object\n\n\n\nFor an array or another object, readonly only means that the field always refers to the same array. The contents can still change: _horses[0] = new Horse(\"Lara\"); compiles and replaces the first horse, and sorting the array rearranges its elements. readonly prevents only _horses = new Horse[3];.\n\n\nFor properties, the same idea is called a get-only property (public int Age { get; }, see Properties in Detail): like a readonly field, it can only be assigned in the constructor.\nCheck your understanding of this chapter with the Static vs. Instance Self-Check Quiz.\n\n\n\n\n\n\nNoteStatic vs. Instance Self-Check Quiz\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Static vs. Instance</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/06-enumerations.html",
+    "href": "content/02-OO-Introduction/06-enumerations.html",
+    "title": "6  Enumerations (enum)",
+    "section": "",
+    "text": "You have already used an enum now and then, e.g. ConsoleColor.Red or ConsoleKey.Enter. Now it’s time to understand what an enum actually is.\nOften a value can only take a few fixed options: a traffic light is red, yellow or green, and a pupil can be checked against voting age, full age or retirement age. You could encode such options as numbers (0 = voting age, 1 = full age, …) or as strings. However, numbers mean nothing to the reader, and a typo in a string is only noticed when the program runs. An enumeration gives each option a name that the compiler knows and checks.\nAn enum is a data type that consists of a fixed list of named constants. The 01-Pupils exercise needs one for AgeType:\nenum AgeType\n{\n    VotingAge, // 0\n    FullAge, // 1\n    RetirementAge // 2\n}\nA variable of type AgeType can only hold one of these three values. If you write AgeType.FulAge, the compiler reports the typo immediately.\nBehind the scenes, every entry is a unique number of an integer type. By default it’s int, and that’s fine: byte, short and long are also possible, but they only matter in special cases such as talking to hardware or code written in other languages. Unless you say otherwise, the entries are numbered 0, 1, 2, … in the order they appear in the code, as the comments above show.\nThis is how you work with an enum:\nAgeType type = AgeType.FullAge;\nConsole.WriteLine(type); // Output: FullAge\n\ntype = (AgeType)2;\nConsole.WriteLine(type); // Output: RetirementAge\n\nint value = (int)AgeType.VotingAge;\nConsole.WriteLine(value); // Output: 0\n\ntype = Enum.Parse&lt;AgeType&gt;(\"FullAge\"); // TryParse would be the smarter choice\nConsole.WriteLine(type); // Output: FullAge\nLine by line:\n\nAn entry is always written with the type name in front: AgeType.FullAge. Console.WriteLine prints its name, not its number.\nA cast converts in both directions: (AgeType)2 turns the number 2 into RetirementAge, and (int)AgeType.VotingAge gives the number 0.\nEnum.Parse&lt;AgeType&gt;(\"FullAge\") turns a string, e.g. read from a file, into the matching entry. It throws an exception if the string doesn’t match any entry. That’s why Enum.TryParse is the better choice, following the same TryParse pattern you know from int.TryParse.\n\nYou can also assign the numbers yourself, e.g. FullAge = 18. Usually the default numbering is fine, and it’s all AgeType needs here.\nCheck your understanding of this chapter with the Enumerations Self-Check Quiz.\n\n\n\n\n\n\nNoteEnumerations Self-Check Quiz\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Enumerations (`enum`)</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/07-naming-conventions.html",
+    "href": "content/02-OO-Introduction/07-naming-conventions.html",
+    "title": "7  Naming Conventions",
+    "section": "",
+    "text": "7.1 How Names Are Written\nThe compiler doesn’t care whether a property is called FirstName, firstname or fn. People do. Code is read far more often than it is written, and names are what a reader sees first. C# developers all over the world follow the same naming conventions, based on Microsoft’s guidelines. If you follow them too, anyone can tell at a glance whether a name is a class, a property, a field or a local variable, without scrolling to its declaration.\nThe conventions answer two questions: how a name is written (upper- or lowercase, underscore) and what a name should say.\nC# uses two styles of capitalization:\nNeither style uses spaces or underscores between words. The only underscore is the prefix of private fields.\nThe rule of thumb: everything that is visible from outside a class (the class itself, its public properties, methods and constants) is written in PascalCase. Everything that is local or private data (parameters, local variables, private fields) starts with a lowercase letter, and private fields additionally get a leading underscore. The one exception: constants are always PascalCase, even when they are private (DelayMilliseconds in HorseRace).\nThe different styles also help where names are similar: a parameter name, a field _name and a property Name can exist side by side in one class, and you always know which one is meant.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naming Conventions</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/07-naming-conventions.html#how-names-are-written",
+    "href": "content/02-OO-Introduction/07-naming-conventions.html#how-names-are-written",
+    "title": "7  Naming Conventions",
+    "section": "",
+    "text": "PascalCase: every word starts with an uppercase letter, including the first: Pupil, FirstName, IsOlderThan, HorseRace.\ncamelCase: like PascalCase, but the first letter is lowercase: firstName, dateOfBirth, startNumber.\n\n\n\n\n\n\n\n\n\n\n\nElement\nStyle\nExample\n\n\n\n\nClass, enum, record\nPascalCase\nPupil, HorseRace, AgeType\n\n\nEntry of an enum\nPascalCase\nAgeType.FullAge\n\n\nProperty\nPascalCase\nFirstName, ZipCode, IsFinished\n\n\nMethod\nPascalCase\nIsOlderThan, PrintResults, Move\n\n\nConstant (const)\nPascalCase\nMaxSteps, DelayMilliseconds\n\n\nprivate field (also static)\n_ + camelCase\n_zipCode, _horses, _nextId\n\n\nParameter\ncamelCase\nfirstName, dateOfBirth\n\n\nLocal variable\ncamelCase\nyears, fullYearsDate\n\n\nInterface (later this year)\nI + PascalCase\nIComparable\n\n\n\n\n\n\n\n\n\n\nImportantYour IDE checks this\n\n\n\nThe exercises ship an .editorconfig file with exactly these rules. Rider and Visual Studio underline names that break them and suggest a fix. The build still succeeds, so it’s up to you: fix these hints right away instead of ignoring them.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naming Conventions</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/07-naming-conventions.html#what-names-should-say",
+    "href": "content/02-OO-Introduction/07-naming-conventions.html#what-names-should-say",
+    "title": "7  Naming Conventions",
+    "section": "7.2 What Names Should Say",
+    "text": "7.2 What Names Should Say\nA correctly capitalized name can still be a bad name. These guidelines help you choose good ones:\n\nClasses are nouns, in the singular: Pupil, Horse, HorseRace. An object of the class is one such thing. A class name like Pupils or ManagePupils is a hint that something is wrong.\nMethods are verbs, because they do something: Move(), PrintResults(), AssignRanks(). A method that answers a yes/no question starts with Is, Has or Can and returns bool: IsOlderThan(other), IsOfAge(type).\nProperties are nouns or adjectives, because they describe the object: FirstName, Age, Position. A bool property also starts with Is, Has or Can: IsFinished, HasZipCode.\nCollections are plural: an array of horses is called _horses, not _horse or _horseArray.\nSay what it is, not how it is stored: DateOfBirth, not DateString or Dob.\nNo abbreviations unless everybody knows them (Id, Html). Autocompletion writes long names for you, so startNumber costs nothing compared to sn.\nEnglish only: C# keywords and the .NET class library are English, so Pupil.IsOfAge reads naturally, while a mix like Schueler.IsVolljaehrig does not.\nOne class per file, and the file has the same name as the class: Pupil lives in Pupil.cs.\n\n\n\n\n\n\n\nTipRenaming is cheap\n\n\n\nIf you notice that a name no longer fits, rename it with your IDE’s rename refactoring (Rename in the context menu; Ctrl+R, R in Visual Studio, Ctrl+R, R or Shift+F6 in Rider, depending on its keymap). It updates every usage in the whole solution, so there is no excuse for keeping a misleading name.\n\n\nCheck your understanding of this chapter with the Naming Conventions Self-Check Quiz.\n\n\n\n\n\n\nNoteNaming Conventions Self-Check Quiz\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Naming Conventions</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/08-uml-class-diagrams.html",
+    "href": "content/02-OO-Introduction/08-uml-class-diagrams.html",
+    "title": "8  UML Class and Object Diagrams",
+    "section": "",
+    "text": "8.1 Class Diagrams\nUML (Unified Modeling Language) is a standardized set of diagram types for describing software design independently of any programming language. The class diagram is UML’s diagram for static structure: it shows the classes in a system, their members (fields, properties, methods), and how classes relate to one another — without any of the runtime behavior or control flow.\nPlantUML is a text-based way to author UML diagrams: you write the diagram as plain text (@startuml … @enduml), and a renderer turns it into an image. See the class diagram and object diagram syntax references for the full notation.\nThis chapter covers two UML diagram types: class diagrams show the blueprint of the classes, object diagrams show the objects that exist at one moment while the program runs.",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>UML Class and Object Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/08-uml-class-diagrams.html#class-diagrams",
+    "href": "content/02-OO-Introduction/08-uml-class-diagrams.html#class-diagrams",
+    "title": "8  UML Class and Object Diagrams",
+    "section": "",
+    "text": "NoteWhy class diagrams matter\n\n\n\nClass diagrams matter in software development because they let you communicate and review a design before (or without) reading all the code: given a class’s public members and its relationships to other classes, another developer can understand what it’s responsible for and how to use it.\n\n\n\n8.1.1 Class Diagram Notation\n\n\n\n\n\n\n\n\nSymbol\nMeaning\nRendered As\n\n\n\n\n+\npublic member\ngreen circle icon before the member\n\n\n-\nprivate member\nred square icon before the member\n\n\n{static} (prefix)\nstatic member\nmember name shown underlined\n\n\ntype name\nfield or property\nplain attribute line, e.g. - int age\n\n\nreturnType name(params)\nmethod\nplain line with the visibility icon, e.g. + bool isOfAge(AgeType)\n\n\nenum Name { ... }\nan enum\nits own box, marked with an enum icon/&lt;&lt;Enumeration&gt;&gt; label, listing values\n\n\n..&gt;\ndependency (“uses”)\ndashed line with an open (unfilled) arrowhead\n\n\n\nPlantUML has no built-in symbol for readonly or a private setter, so this repo’s diagrams add a bracketed suffix as a plain-text convention — PlantUML just prints whatever text follows a member, so this isn’t parsed as anything special, just displayed:\n\n\n\n\n\n\n\n\nSuffix\nMeaning\nRendered As\n\n\n\n\n[const]\ncompile-time constant\nliteral trailing text — no icon or styling of its own\n\n\n[readonly]\nno public setter at all\nliteral trailing text — no icon or styling of its own\n\n\n[private set]\npublic getter, but the setter is private\nliteral trailing text — no icon or styling of its own\n\n\n\n\n\n8.1.2 Illustration: the Pupil Class\n\nSame diagram, as plain text (for reference — this block isn’t rendered):\n@startuml\nleft to right direction\n\nenum AgeType {\n    VotingAge\n    FullAge\n    RetirementAge\n}\nclass Pupil {\n    {static} -int _nextId\n    -DateOnly _dateOfBirth [readonly]\n    -int? _zipCode\n    +Pupil(string, string, DateOnly)\n    +int Age [readonly]\n    +string FirstName [readonly]\n    +int Id [readonly]\n    +string LastName [readonly]\n    +int? ZipCode\n    +bool IsOfAge(AgeType)\n    +bool IsOlderThan(Pupil)\n    +bool LivesNearby(Pupil)\n}\nPupil ..&gt; AgeType : uses\n\n@enduml",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>UML Class and Object Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/08-uml-class-diagrams.html#object-diagrams",
+    "href": "content/02-OO-Introduction/08-uml-class-diagrams.html#object-diagrams",
+    "title": "8  UML Class and Object Diagrams",
+    "section": "8.2 Object Diagrams",
+    "text": "8.2 Object Diagrams\nA class diagram shows the blueprint: which data and methods every object of a class has. An object diagram shows what exists at one particular moment while the program runs: the concrete objects, the values of their data, and which objects refer to which. You can think of it as a snapshot of the heap.\n\n\n\n\n\n\nNoteWhy object diagrams matter\n\n\n\nObject diagrams matter because many bugs are not about what a class looks like, but about which objects exist at runtime and how they are connected: drawing the objects step by step lets you follow a program the way you did desk checks in the first year, and see mistakes such as a missing object or a reference to the wrong one.\n\n\nAn object diagram differs from a class diagram in a few ways:\n\nConcrete values instead of types: a class diagram says +string FirstName, an object diagram says FirstName = \"Anna\". All data of the object is shown, including private fields, because it all belongs to the object’s state.\nNo methods: all objects of a class have the same methods, so they would add nothing to the snapshot.\nNo static fields: they belong to the class, not to an object. Pupil._nextId therefore never appears in an object box.\nMany boxes per class: there is one box per object, so a class can appear many times, or not at all if no object of it exists at that moment.\n\n\n8.2.1 Object Diagram Notation\n\n\n\n\n\n\n\n\nSymbol\nMeaning\nRendered As\n\n\n\n\nobject \"name : Class\" as alias\nan object named name of class Class\na box with name : Class as heading\n\n\n__text__\nunderlined text\nUML underlines object headings to tell them apart from classes\n\n\n\": Class\" (no name)\nan anonymous object\nheading shows only : Class, e.g. an array element\n\n\nname = value\ncurrent value of a field or property\nplain line in the box, e.g. ZipCode = 4060\n\n\na --&gt; b : label\nlink: a holds a reference to b\nsolid arrow, labeled with the field that holds the reference\n\n\nallowmixing\nclasses and objects in the same diagram\nlets class boxes appear next to object boxes\n\n\na ..&gt; Class : &lt;&lt;instanceOf&gt;&gt;\na is an instance of Class\ndashed arrow labeled «instanceOf»\n\n\n\nThe alias is only used inside the PlantUML text to draw links (anna, race). It is not shown in the diagram.\n\n\n8.2.2 Illustration: Two Pupil Objects\nThe two pupils from the chapter Classes and Objects as an object diagram. Each object has its own values, and both are instances of the same class. paul was created without a ZIP code, so his _zipCode is null.\n\nSame diagram, as plain text (for reference — this block isn’t rendered):\n@startuml\nallowmixing\n\nclass Pupil {\n    -DateOnly _dateOfBirth [readonly]\n    -int? _zipCode\n    +int Id [readonly]\n    +string FirstName [readonly]\n    +string LastName [readonly]\n}\nobject \"__anna : Pupil__\" as anna {\n    Id = 1\n    FirstName = \"Anna\"\n    LastName = \"Müller\"\n    _dateOfBirth = 2008-05-12\n    _zipCode = 4060\n}\nobject \"__paul : Pupil__\" as paul {\n    Id = 2\n    FirstName = \"Paul\"\n    LastName = \"Gruber\"\n    _dateOfBirth = 2006-07-30\n    _zipCode = null\n}\nanna ..&gt; Pupil : &lt;&lt;instanceOf&gt;&gt;\npaul ..&gt; Pupil : &lt;&lt;instanceOf&gt;&gt;\n\n@enduml\n\n\n8.2.3 Illustration: Objects That Refer to Each Other\nObject diagrams really pay off when objects hold references to other objects. In the 03-HorseRace exercise, a HorseRace object keeps its horses in the array _horses. This snapshot shows a race with three horses in the middle of a run:\n\nEach arrow is one element of the array: _horses[0] holds a reference to egon, and so on. The horses themselves don’t know the race, so there are no arrows back. After the next MoveHorses() call, the Position values change, but the arrows stay the same. A second snapshot would show exactly that.\nCheck your understanding of this chapter with the UML Class and Object Diagrams Self-Check Quiz.\n\n\n\n\n\n\nNoteUML Class and Object Diagrams Self-Check Quiz\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>UML Class and Object Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "content/02-OO-Introduction/09-glossary.html",
+    "href": "content/02-OO-Introduction/09-glossary.html",
+    "title": "9  Glossary",
+    "section": "",
+    "text": "Term\nDescription\nSyntax\n\n\n\n\nClass\nData type, blueprint, template\npublic class Pupil {}\n\n\nObject\nInstance, object instance, concrete manifestation of a class\nPupil p = new Pupil();\n\n\nObject diagram\nUML diagram that shows the objects existing at one moment at runtime, with their current values and the references between them.\nobject \"__anna : Pupil__\" as anna { ... } (PlantUML)\n\n\nObject reference\nVariable of the class’s type that points to a concrete object instance (or null). The variable lives on the stack and holds the memory address of the object on the heap (or null).\nPupil p;\np = new Pupil();\np = null;\n\n\nConstructor\nMethod that is called with new while an object is being instantiated (created).\nMethod with no return value, method name == class name\n\n\nDefault constructor\nA parameterless constructor exists automatically, unless you define a custom constructor.\npublic Pupil(){}\n\n\nCustom constructor\nUsed to shape/initialize the new object with specific parameters. This is how, e.g., mandatory properties of an object are established at the very start of its lifetime. Example: Pupil p = new Pupil(\"Susi\", \"Huber\");\npublic Pupil(string firstName, string LastName) {}\n\n\nProperties\nData that (can) distinguish one object from another. Aka properties, member variables, instance variables\npublic string FirstName {get; set;}\n\n\nBehavior\nInstance methods (object methods) are methods that run on an object. They represent the object’s abilities. They can also change the object’s properties.\n\n\n\nPublicly visible\nA class/constructor/property/method is public and can be used from any other project in the same VS solution - see unit tests.\npublic\n\n\nPrivate\nPrivate data or methods that only the class itself needs to fulfill its tasks.\nprivate\n\n\nRead-only properties\nOnly read access to an object’s properties is publicly allowed. Setting or changing the property may only happen from inside the class itself.\npublic string FirstName {get; private set;}\n\n\nfield keyword\nSince C# 14: inside a property accessor, field is the backing field the compiler creates. Lets you add a check to an auto property without declaring the field yourself.\npublic int? ZipCode { get; set { if (...) field = value; } }\n\n\nComputed properties\nOnly a get accessor is defined for the property. The property’s value can’t be set because it is freshly computed on every access.\npublic int Age {get { ... } }\n\n\nClass methods\nCan only be invoked on the class name, not on object instances. Examples: Console.WriteLine(), CsvImporter.ReadCsvFile()\nstatic methods of a class\n\n\nStatic field\nExists once for the whole class and is shared by all objects.\nprivate static int _nextId;\n\n\nConstant\nValue fixed in the code at compile time; belongs to the class and is used via the class name.\npublic const int MaxSteps = 20;\n\n\nRead-only field\nSet at the declaration or in the constructor, never changed afterwards. For arrays and objects only the reference is fixed, not the contents.\nprivate readonly Horse[] _horses;",
+    "crumbs": [
+      "OO Basics",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Glossary</span>"
+    ]
+  }
+]
